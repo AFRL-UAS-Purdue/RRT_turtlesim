@@ -1,0 +1,23 @@
+
+<launch>
+
+  <!--optional nodes-->
+
+  <!--use cam_deg to set your camera angle
+    also set camera angle for your drone in the world.jinja file
+    pitch angle 0 horizontal, 30 (30 degree pitch down)
+   -->
+  <arg name="cam_deg" default="0"/>
+  
+  <!-- rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" output="log"  args="-d $(find turtle_planner)/config/turtle_planner_jc2.rviz" />
+
+  <!-- Launch turtlesim node -->
+  <node name="turtlesim_node" pkg="turtlesim" type="turtlesim_node" output="log"/>
+  
+  <!-- launch rviz -->
+  <node name="turtle_goal" pkg="turtle_planner" type="turtle_goal.py" output="screen" launch-prefix="xterm -T 'turtle_goal' -e"/>
+
+</launch>
+
+<!-- vim set ft=xml ts=2 sw=2 et: -->

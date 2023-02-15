@@ -1,0 +1,19 @@
+
+services:
+
+  # onboard computer
+  onboard:
+    container_name: onboard_rrt
+    hostname: onboard_rrt
+    image: jcooper/auav_f22_onboard_rrt:latest
+    #command: bash -c ". ~/ws/install/setup.sh && ros2 launch auav_f22 sample.launch.py"
+    command: terminator --geometry=800x500+0+0 -e ". ~/px4_ros_com_ros2/install/setup.sh && colcon build --symlink-install --event-handler console_direct+ && . ./install/setup.sh && ros2 launch auav_f22 sample.launch.py; read -p 'press enter'"
+    #command: terminator --geometry=800x500+0+0 -e ". ~/px4_ros_com_ros2/install/setup.sh && sudo DEBIAN_FRONTEND=noninteractive apt install build-essential libboost-system-dev libboost-thread-dev libboost-program-options-dev libboost-test-dev -y && sudo apt-get update && sudo apt-get install ros-foxy-pcl-conversions -y && sudo apt-get install ros-foxy-pcl-ros -y && colcon build --symlink-install --event-handler console_direct+ && . ./install/setup.sh && ros2 launch auav_f22 sample.launch.py; read -p 'press enter'"
+    build:
+      dockerfile: onboard_rrt/Dockerfile
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - $PWD/onboard_rrt/ws:/home/docker/ws:rw
+
